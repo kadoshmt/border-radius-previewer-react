@@ -2,21 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function BorderInput({ children, borderValue, setBorderValue}) {
+function BorderInput({ borderValue, setBorderValue}) {
   return(
-    <div className="field">
-    <span>{children}</span>
     <input value={borderValue}
       maxLength={3}
       autoComplete="false"
       onChange={(e) => setBorderValue(Number.parseInt(e.target.value))} />
-    </div>
   )
 }
 
-export default function App() {  
+export default function App() {
+  const [errorMessage, setErrorMessage] = useState('')  
   const [borderTopLeftRadius, setBorderTopLeftRadius] = useState(15)  
-  const [borderTopRightRadius, setBoderTopRightRadius] = useState(15)  
+  const [borderTopRightRadius, setBopRightRadius] = useState(15)  
   const [borderBottomRightRadius, setBorderBottomRightRadius] = useState(15)  
   const [borderBottomLeftRadius, setBorderBottomLeftRadius] = useState(15) 
   const [resultCss, setResultCss] = useState('') 
@@ -47,12 +45,38 @@ export default function App() {
         </div>      
         <form onSubmit={(e) => e.preventDefault()}>
           <h3>Border Corners</h3>
-          <BorderInput borderValue={borderTopLeftRadius} setBorderValue={setBorderTopLeftRadius} >Top-Left: </BorderInput>
-          <BorderInput borderValue={borderTopRightRadius} setBorderValue={setBoderTopRightRadius} >Top-Right: </BorderInput>
-          <BorderInput borderValue={borderBottomRightRadius} setBorderValue={setBorderBottomRightRadius} >Bottom-Right: </BorderInput>
-          <BorderInput borderValue={borderBottomLeftRadius} setBorderValue={setBorderBottomLeftRadius} >Bottom-Left: </BorderInput>
+          <div className="field">
+            <span>Top-Left: </span>
+            <input value={borderTopLeftRadius}
+              maxLength={3}
+              autoComplete="false"
+              onChange={(e) => setBorderTopLeftRadius(Number.parseInt(e.target.value))}
+            />
+          </div>
+          <div className="field">
+            <span>Top-Right: </span>
+            <input value={borderTopRightRadius}
+              maxLength={3}
+              autoComplete="false"
+              onChange={(e) => setBopRightRadius(Number.parseInt(e.target.value))}
+            />
+          </div>
+          <div className="field">
+            <span>Bottom-Right: </span>
+            <input value={borderBottomRightRadius}
+              maxLength={3}
+              autoComplete="false"
+              onChange={(e) => setBorderBottomRightRadius(Number.parseInt(e.target.value))}
+            />
+          </div>
+          <div className="field">
+            <span>Bottom-Left: </span>
+            <BorderInput borderValue={borderBottomLeftRadius} setBorderValue={setBorderBottomLeftRadius} />
+            
+          </div>          
         </form>        
-      </div>      
+      </div>
+      {errorMessage &&  <div className="error">{ errorMessage }</div>}
       <input ref={resultRef} value={resultCss} className="result-css"/>
       <button onClick={copyToClipboard}>Copy to Clipboard</button>
     </div>
